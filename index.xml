@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Leon Blog</title>
+    <link>https://leon-cappuccino.github.io/</link>
+    <description>Recent content on Leon Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 18 Feb 2022 19:55:05 +0800</lastBuildDate><atom:link href="https://leon-cappuccino.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Android实用技巧</title>
+      <link>https://leon-cappuccino.github.io/posts/android%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Fri, 18 Feb 2022 19:55:05 +0800</pubDate>
+      
+      <guid>https://leon-cappuccino.github.io/posts/android%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+      <description>Android实用技巧 Android疑难杂症 1.对于某些手机无法完成usb安装 （1）检查AndroidMainfest 查看AndroidMainfest中的android:testOnly=&amp;ldquo;true&amp;rdquo;，如果为true，无论真机模拟机都无法运行。
+其中android:testOnly属性表示应用是否是用于测试，可能向外暴露数据，为true的时候只能通过adb安装，一般默认为false。
+（2）gradle.properties 在gradle.properties中增加android.injected.testOnly=false，该方法可以解决大部分问题
+Android实际开发技巧 1.activity管理 （1）快速找到当前activity 实际项目中为了快速找到当前activity，最好使所有的activity继承一个基类activity，基类必须使用open表示可以继承，该基类activity继承AppCompatActivity(),在基类activity中加入javaClass.simpleName
+open class BaseActivity : AppCompatActivity() { override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState) Log.d(&amp;#34;BaseActivity&amp;#34;,javaClass.simpleName) } } （2）一键关闭所有activity 为了一键关闭所有activity，首先需要让所有的activity都继承自基类activity，之后做出一个单例类，如下：
+object ActivityCollector { private val activities=ArrayList&amp;lt;Activity&amp;gt;() fun addActivity(activity: Activity){ activities.add(activity) } fun removeActivity(activity: Activity){ activities.remove(activity) } fun finishAll(){ for (activity in activities){ if (!activity.isFinishing){ activity.finish() } } activities.clear() } } 该单例类使用arraylist管理activity，同时在基类activity中onCreate方法和OnDestory中使用单例类方法
+open class BaseActivity : AppCompatActivity() { override fun onCreate(savedInstanceState: Bundle?) { super.</description>
+    </item>
+    
+    <item>
+      <title>Blog</title>
+      <link>https://leon-cappuccino.github.io/posts/blog/</link>
+      <pubDate>Fri, 18 Feb 2022 10:51:05 +0800</pubDate>
+      
+      <guid>https://leon-cappuccino.github.io/posts/blog/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
