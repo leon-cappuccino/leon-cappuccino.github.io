@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据 on Leon Blog</title>
+    <link>https://leon-cappuccino.github.io/categories/%E6%95%B0%E6%8D%AE/</link>
+    <description>Recent content in 数据 on Leon Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 13 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://leon-cappuccino.github.io/categories/%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Android本地数据存储</title>
+      <link>https://leon-cappuccino.github.io/posts/android%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/</link>
+      <pubDate>Sun, 13 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://leon-cappuccino.github.io/posts/android%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/</guid>
+      <description>Android本地数据存储 SharedPreferences SharedPreferences是Android平台上一个轻量级的存储辅助类，用来保存应用的一些常用配置，SharedPreferences是使用键值对的方式来存储数据的
+1.将数据存储到SharedPreferences中 （1）获得SharedPreferences.Editor对象 首先我们通过Activity类中的getSharedPreferences方法获取SharedPreferences对象，其中第一个参数为文件名称，第二个参数为操作模式，目前只有默认的MODE_PRIVATE可选，表示只有当前的应用程序才可以对这个SharedPreferences文件进行读写。
+我们在之后操作中需要使用的是SharedPreferences.Editor对象，通过SharedPreferences对象的edit()方法得到。
+ val editor = getSharedPreferences(&amp;#34;data&amp;#34;, Context.MODE_PRIVATE).edit() （2）向SharedPreferences.Editor对象中添加数据 通过使用对应数据类型的putxxx方法以键值对的方式向SharedPreferences.Editor对象中添加数据。
+ editor.putString(&amp;#34;name&amp;#34;, &amp;#34;Tom&amp;#34;)  editor.putInt(&amp;#34;age&amp;#34;, 28)  editor.putBoolean(&amp;#34;married&amp;#34;, false) （3）调用apply()方法将添加的数据提交 editor.apply() 之后我们可以在对应项目的shared_prefs/目录下看到data.xml文件
+2.从SharedPreferences中读取数据 读取数据比较简单，首先我们需要获取一个SharedPreferences对象，之后使用对应的getxxx方法就可以读取data.xml中的值
+ val prefs = getSharedPreferences(&amp;#34;data&amp;#34;, Context.MODE_PRIVATE) //第二个参数表示如果获取失败默认返回值  val name = prefs.getString(&amp;#34;name&amp;#34;, &amp;#34;&amp;#34;)  val age = prefs.getInt(&amp;#34;age&amp;#34;, 0)  val married = prefs.getBoolean(&amp;#34;married&amp;#34;, false) SQLite SQLite是一款轻量级的关系型数据库，内置于Android，它的运算速度非常快，占用资源很少，支持标准的SQL语法，还遵循了数据库的ACID事务。
+1.如何创建数据库？ Android提供了SQLiteOpenHelper帮助类来对SQLite进行创建和升级，SQLiteOpenHelper是一个抽象类，继承它之后需要重写它的两个抽象方法onCreate()和onUpgrade()。
+（1）继承SQLiteOpenHelper 首先我们需要新建类来继承SQLiteOpenHelper，通过SQL语句创建数据库，为了可以执行SQL语句，我们需要借助onCreate中的参数SQLiteDatabase，该参数的方法execSQL(string sql)可以执行非SELECT或其他不返回数据的单个SQL语句。
+class MyDatabaseHelper(val context: Context, name: String, version: Int) :  SQLiteOpenHelper(context, name, null, version) {  private val createBook = &amp;#34;create table Book (&amp;#34; +  &amp;#34; id integer primary key autoincrement,&amp;#34; +  &amp;#34;author text,&amp;#34; +  &amp;#34;price real,&amp;#34; +  &amp;#34;pages integer,&amp;#34; +  &amp;#34;name text)&amp;#34;  override fun onCreate(db: SQLiteDatabase) {  db.</description>
+    </item>
+    
+  </channel>
+</rss>

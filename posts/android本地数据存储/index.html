@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Android本地数据存储 | Leon Blog</title>
+    <meta property="og:title" content="Android本地数据存储 - Leon Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-03-13T00:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-03-13T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="Android本地数据存储常用的有SharedPreferences和SQLite">
+        
+    <meta name="author" content="">
+    <meta property="og:url" content="https://leon-cappuccino.github.io/posts/android%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://leon-cappuccino.github.io/">
+                        Leon Blog
+                    </a>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://leon-cappuccino.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">Android本地数据存储</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年3月13日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E6%95%B0%E6%8D%AE'>数据</a></span>
+            
+            <span class="meta-category"><a href='/categories/android%E5%9F%BA%E7%A1%80'>Android基础</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <h1 id="android本地数据存储">Android本地数据存储</h1>
+<h2 id="sharedpreferences"><code>SharedPreferences</code></h2>
+<p><code>SharedPreferences</code>是Android平台上一个轻量级的存储辅助类，用来保存应用的一些常用配置，<code>SharedPreferences</code>是使用键值对的方式来存储数据的</p>
+<h3 id="1将数据存储到sharedpreferences中">1.将数据存储到<code>SharedPreferences</code>中</h3>
+<h4 id="1获得sharedpreferenceseditor对象">（1）获得<code>SharedPreferences.Editor</code>对象</h4>
+<p>首先我们通过Activity类中的<code>getSharedPreferences</code>方法获取<code>SharedPreferences</code>对象，其中第一个参数为文件名称，第二个参数为操作模式，目前只有默认的<code>MODE_PRIVATE</code>可选，表示只有当前的应用程序才可以对这个<code>SharedPreferences</code>文件进行读写。</p>
+<p>我们在之后操作中需要使用的是<code>SharedPreferences.Editor</code>对象，通过<code>SharedPreferences</code>对象的<code>edit()</code>方法得到。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> editor = getSharedPreferences(<span style="color:#e6db74">&#34;data&#34;</span>, Context.MODE_PRIVATE).edit()
+</span></span></code></pre></div><h4 id="2向sharedpreferenceseditor对象中添加数据">（2）向<code>SharedPreferences.Editor</code>对象中添加数据</h4>
+<p>通过使用对应数据类型的<code>putxxx</code>方法以键值对的方式向<code>SharedPreferences.Editor</code>对象中添加数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span> editor.putString(<span style="color:#e6db74">&#34;name&#34;</span>, <span style="color:#e6db74">&#34;Tom&#34;</span>)
+</span></span><span style="display:flex;"><span> editor.putInt(<span style="color:#e6db74">&#34;age&#34;</span>, <span style="color:#ae81ff">28</span>)
+</span></span><span style="display:flex;"><span> editor.putBoolean(<span style="color:#e6db74">&#34;married&#34;</span>, <span style="color:#66d9ef">false</span>)
+</span></span></code></pre></div><h4 id="3调用apply方法将添加的数据提交">（3）调用apply()方法将添加的数据提交</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>editor.apply()
+</span></span></code></pre></div><p>之后我们可以在对应项目的<code>shared_prefs/</code>目录下看到<code>data.xml</code>文件</p>
+<h3 id="2从sharedpreferences中读取数据">2.从<code>SharedPreferences</code>中读取数据</h3>
+<p>读取数据比较简单，首先我们需要获取一个<code>SharedPreferences</code>对象，之后使用对应的<code>getxxx</code>方法就可以读取<code>data.xml</code>中的值</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> prefs = getSharedPreferences(<span style="color:#e6db74">&#34;data&#34;</span>, Context.MODE_PRIVATE)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//第二个参数表示如果获取失败默认返回值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#66d9ef">val</span> name = prefs.getString(<span style="color:#e6db74">&#34;name&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> age = prefs.getInt(<span style="color:#e6db74">&#34;age&#34;</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> married = prefs.getBoolean(<span style="color:#e6db74">&#34;married&#34;</span>, <span style="color:#66d9ef">false</span>)
+</span></span></code></pre></div><h2 id="sqlite"><code>SQLite</code></h2>
+<p><code>SQLite</code>是一款轻量级的关系型数据库，内置于Android，它的运算速度非常快，占用资源很少，支持标准的<code>SQL</code>语法，还遵循了数据库的<code>ACID</code>事务。</p>
+<h3 id="1如何创建数据库">1.如何创建数据库？</h3>
+<p>Android提供了<code>SQLiteOpenHelper</code>帮助类来对<code>SQLite</code>进行创建和升级，<code>SQLiteOpenHelper</code>是一个抽象类，继承它之后需要重写它的两个抽象方法<code>onCreate()</code>和<code>onUpgrade()</code>。</p>
+<h4 id="1继承sqliteopenhelper">（1）继承<code>SQLiteOpenHelper</code></h4>
+<p>首先我们需要新建类来继承<code>SQLiteOpenHelper</code>，通过<code>SQL</code>语句创建数据库，为了可以执行<code>SQL</code>语句，我们需要借助<code>onCreate</code>中的参数<code>SQLiteDatabase</code>，该参数的方法<code>execSQL(string sql)</code>可以执行非SELECT或其他不返回数据的单个<code>SQL</code>语句。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyDatabaseHelper</span>(<span style="color:#66d9ef">val</span> context: Context, name: String, version: Int) :
+</span></span><span style="display:flex;"><span> SQLiteOpenHelper(context, name, <span style="color:#66d9ef">null</span>, version) {
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> createBook = <span style="color:#e6db74">&#34;create table Book (&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34; id integer primary key autoincrement,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;author text,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;price real,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;pages integer,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;name text)&#34;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onCreate</span>(db: SQLiteDatabase) {
+</span></span><span style="display:flex;"><span> 	db.execSQL(createBook)
+</span></span><span style="display:flex;"><span> 	Toast.makeText(context, <span style="color:#e6db74">&#34;Create succeeded&#34;</span>, Toast.LENGTH_SHORT).show()
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onUpgrade</span>(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="2读写数据库">（2）读写数据库</h4>
+<p><code>SQLiteOpenHelper</code>有两个非常重要的方法：<code>getReadableDatabase()</code>和<code>getWritableDatabase()</code>，两个方法都可以创建或打开一个现有的数据库（如果数据库已存在则直接打开，否则创建一个新的数据库），并返回一个可对数据库进行读写操作的对象，两者的区别是：当数据库不可写入的时候（如磁盘空间已满）<code>getReadableDatabase()</code>返回的对象以只读的方式打开数据库，而<code>getWritableDatabase()</code>方法出现异常。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>SQLiteDatabase <span style="color:#a6e22e">getReadableDatabase</span><span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>SQLiteDatabase <span style="color:#a6e22e">getWritableDatabase</span><span style="color:#f92672">()</span>
+</span></span></code></pre></div><p>在activity中得到<code>SQLiteOpenHelper</code>对象并调用写入方法。之后通过插件<code>Database Navigator</code>可以查看<code>BookStore.db</code>文件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MainActivity</span> : AppCompatActivity() {
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onCreate</span>(savedInstanceState: Bundle?) {
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">super</span>.onCreate(savedInstanceState)
+</span></span><span style="display:flex;"><span> 	setContentView(R.layout.activity_main)
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">val</span> dbHelper = MyDatabaseHelper(<span style="color:#66d9ef">this</span>, <span style="color:#e6db74">&#34;BookStore.db&#34;</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>	 createDatabase.setOnClickListener {
+</span></span><span style="display:flex;"><span> 		dbHelper.writableDatabase
+</span></span><span style="display:flex;"><span> }}}
+</span></span></code></pre></div><h3 id="2如何对数据库进行升级">2.如何对数据库进行升级？</h3>
+<p>升级数据库的方法就是在<code>onUpgrade()</code>中对数据库的版本号进行判断，当指定的数据库版本号大于当前数据库版本号的时候，就会进入<code>onUpgrade()</code>方法中执行更新操作，注意我们需要对每个版本号所需要进行的升级改变进行编写。当当前版本号高于上个版本号就会触发<code>onUpgrade()</code>方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyDatabaseHelper</span>(<span style="color:#66d9ef">val</span> context: Context, name: String, version: Int):
+</span></span><span style="display:flex;"><span> SQLiteOpenHelper(context, name, <span style="color:#66d9ef">null</span>, version) {
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> createBook = <span style="color:#e6db74">&#34;create table Book (&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34; id integer primary key autoincrement,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;author text,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;price real,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;pages integer,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;name text,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;category_id integer)&#34;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> createCategory = <span style="color:#e6db74">&#34;create table Category (&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;id integer primary key autoincrement,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;category_name text,&#34;</span> +
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;category_code integer)&#34;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onCreate</span>(db: SQLiteDatabase) {
+</span></span><span style="display:flex;"><span> 	db.execSQL(createBook)
+</span></span><span style="display:flex;"><span> 	db.execSQL(createCategory)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onUpgrade</span>(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">if</span> (oldVersion <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span> 		db.execSQL(createCategory)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">if</span> (oldVersion <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span> 		db.execSQL(<span style="color:#e6db74">&#34;alter table Book add column category_id integer&#34;</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们通过对版本号进行判断来执行不同的操作，即如果是0版本和1版本就会创建Category表。这样就保证了数据库不会丢失。</p>
+<h3 id="3如何对sqlite进行增删改查">3.如何对<code>SQLite</code>进行增删改查</h3>
+<h4 id="1insert">（1）insert</h4>
+<p>通过使用<code>SQLiteDatabase</code>提供的insert方法就可以实现数据的插入。第一个参数是表名；第二个参数一般我们用不到，直接传入null即可；第三个参数是一个<code>ContentValues</code>对象，它提供了一系列的put()方法重载，用于向<code>ContentValues</code>中添加数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">long</span> <span style="color:#a6e22e">insert</span> <span style="color:#f92672">(</span>String table<span style="color:#f92672">,</span> String nullColumnHack<span style="color:#f92672">,</span> ContentValues values<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>因此对于insert方法我们这样使用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> db = dbHelper.writableDatabase
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> values1 = ContentValues().apply {
+</span></span><span style="display:flex;"><span> 	put(<span style="color:#e6db74">&#34;name&#34;</span>, <span style="color:#e6db74">&#34;The Da Vinci Code&#34;</span>)
+</span></span><span style="display:flex;"><span> 	put(<span style="color:#e6db74">&#34;author&#34;</span>, <span style="color:#e6db74">&#34;Dan Brown&#34;</span>)
+</span></span><span style="display:flex;"><span> 	put(<span style="color:#e6db74">&#34;pages&#34;</span>, <span style="color:#ae81ff">454</span>)
+</span></span><span style="display:flex;"><span> 	put(<span style="color:#e6db74">&#34;price&#34;</span>, <span style="color:#ae81ff">16.96</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> db.insert(<span style="color:#e6db74">&#34;Book&#34;</span>, <span style="color:#66d9ef">null</span>, values1)
+</span></span></code></pre></div><h4 id="2update">（2）update</h4>
+<p>对于update函数，前两个参数不再赘述，第三个参数是一个类似<code>SQL</code>语句中的where语句，约束条件，第四个也是约束条件，通常给第三个约束条件提供具体信息。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">update</span> <span style="color:#f92672">(</span>String table<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>            ContentValues values<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>            String whereClause<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>            String<span style="color:#f92672">[]</span> whereArgs<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>具体使用方法如下,下面的代码更新所有name等于?的行，?是一个占位符，这个占位符的值在第四个约束条件中，将<code>The Da Vinci Code</code>这本书的价格改成10.99。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> db = dbHelper.writableDatabase
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> values = ContentValues()
+</span></span><span style="display:flex;"><span> values.put(<span style="color:#e6db74">&#34;price&#34;</span>, <span style="color:#ae81ff">10.99</span>)
+</span></span><span style="display:flex;"><span> db.update(<span style="color:#e6db74">&#34;Book&#34;</span>, values, <span style="color:#e6db74">&#34;name = ?&#34;</span>, arrayOf(<span style="color:#e6db74">&#34;The Da Vinci Code&#34;</span>))
+</span></span></code></pre></div><h4 id="3delete">（3）delete</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">delete</span> <span style="color:#f92672">(</span>String table<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>            String whereClause<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>            String<span style="color:#f92672">[]</span> whereArgs<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>对于delete函数的使用与update相同，下面的代码删除页数超过500页的书。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> db = dbHelper.writableDatabase
+</span></span><span style="display:flex;"><span> db.delete(<span style="color:#e6db74">&#34;Book&#34;</span>, <span style="color:#e6db74">&#34;pages &gt; ?&#34;</span>, arrayOf(<span style="color:#e6db74">&#34;500&#34;</span>))
+</span></span></code></pre></div><h4 id="4query">（4）query</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Cursor <span style="color:#a6e22e">query</span> <span style="color:#f92672">(</span>  String table<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>                String<span style="color:#f92672">[]</span> columns<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>                String selection<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>                String<span style="color:#f92672">[]</span> selectionArgs<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>                String groupBy<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>                String having<span style="color:#f92672">,</span> 
+</span></span><span style="display:flex;"><span>                String orderBy<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>query函数的返回对象是一个cursor对象，在得到cursor对象后对其取值，query拥有7个参数，这些参数都是对应<code>SQL</code>语句，具体使用如下</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> db = dbHelper.writableDatabase
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">// 查询Book表中所有的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#66d9ef">val</span> cursor = db.query(<span style="color:#e6db74">&#34;Book&#34;</span>, <span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (cursor.moveToFirst()) {
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">do</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">// 遍历Cursor对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>     <span style="color:#66d9ef">val</span> name = cursor.getString(cursor.getColumnIndex(<span style="color:#e6db74">&#34;name&#34;</span>))
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">val</span> author = cursor.getString(cursor.getColumnIndex(<span style="color:#e6db74">&#34;author&#34;</span>))
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">val</span> pages = cursor.getInt(cursor.getColumnIndex(<span style="color:#e6db74">&#34;pages&#34;</span>))
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">val</span> price = cursor.getDouble(cursor.getColumnIndex(<span style="color:#e6db74">&#34;price&#34;</span>))
+</span></span><span style="display:flex;"><span> } <span style="color:#66d9ef">while</span> (cursor.moveToNext())
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> cursor.close()
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//必须关闭cursor
+</span></span></span></code></pre></div><h3 id="4sqlite中使用事务">4.<code>SQLite</code>中使用事务</h3>
+<p>事务可以保证让一系列操作要么全部完成，要么一个都不会完成。在<code>SQLite</code>中使用事务首先调用<code>SQLiteDatabase</code>的<code>beginTransaction()</code>方法开启一个事务，同时使用<code>try-catch</code>捕获异常，当所有的操作都完成之后，调用<code>setTransactionSuccessful()</code>表示事务已经执行成功了，最后在finally代码块中调用<code>endTransaction()</code>结束事务。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> db = dbHelper.writableDatabase
+</span></span><span style="display:flex;"><span> db.beginTransaction() <span style="color:#75715e">// 开启事务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span> 	 db.delete(<span style="color:#e6db74">&#34;Book&#34;</span>, <span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">val</span> values = ContentValues().apply {
+</span></span><span style="display:flex;"><span>     put(<span style="color:#e6db74">&#34;name&#34;</span>, <span style="color:#e6db74">&#34;Game of Thrones&#34;</span>)
+</span></span><span style="display:flex;"><span>     put(<span style="color:#e6db74">&#34;author&#34;</span>, <span style="color:#e6db74">&#34;George Martin&#34;</span>)
+</span></span><span style="display:flex;"><span>     put(<span style="color:#e6db74">&#34;pages&#34;</span>, <span style="color:#ae81ff">720</span>)
+</span></span><span style="display:flex;"><span>     put(<span style="color:#e6db74">&#34;price&#34;</span>, <span style="color:#ae81ff">20.85</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> db.insert(<span style="color:#e6db74">&#34;Book&#34;</span>, <span style="color:#66d9ef">null</span>, values)
+</span></span><span style="display:flex;"><span> db.setTransactionSuccessful() <span style="color:#75715e">// 事务已经执行成功
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> } <span style="color:#66d9ef">catch</span> (e: Exception) {
+</span></span><span style="display:flex;"><span> 	e.printStackTrace()
+</span></span><span style="display:flex;"><span> } <span style="color:#66d9ef">finally</span> {
+</span></span><span style="display:flex;"><span> 	db.endTransaction() <span style="color:#75715e">// 结束事务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> }
+</span></span></code></pre></div>
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/android%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/">Android网络技术</a></li>
+        
+        <li><a href="/posts/jetpack/">Jetpack</a></li>
+        
+        <li><a href="/posts/android%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/">Android面试题之四大组件</a></li>
+        
+        <li><a href="/posts/bitmap/">Bitmap</a></li>
+        
+        <li><a href="/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/">自定义控件</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/android%E5%9F%BA%E7%A1%80'>Android基础</a></li>
+                
+                <li><a href='/tags/%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8'>本地数据存储</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://leon-cappuccino.github.io/">Leon Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://leon-cappuccino.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/" title="Android本地数据存储">Android本地数据存储</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="Android网络技术">Android网络技术</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/jetpack/" title="Jetpack">Jetpack</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/" title="Android面试题之四大组件">Android面试题之四大组件</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/bitmap/" title="Bitmap">Bitmap</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/" title="自定义控件">自定义控件</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E5%9F%BA%E7%A1%80/">Android基础 (4)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Android基础知识 (2)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E7%BD%91%E7%BB%9C/">Android网络 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/jetpack/">Jetpack (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E6%95%B0%E6%8D%AE/">数据 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">自定义控件 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E9%9D%A2%E8%AF%95/">面试 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://leon-cappuccino.github.io/tags/android%E5%9F%BA%E7%A1%80/">Android基础</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/bitmap/">bitmap</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/jetpack/">Jetpack</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/retrofit/">retrofit</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/">四大组件</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">本地数据存储</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">自定义控件</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://leon-cappuccino.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

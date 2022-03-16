@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bitmap on Leon Blog</title>
+    <link>https://leon-cappuccino.github.io/tags/bitmap/</link>
+    <description>Recent content in bitmap on Leon Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 08 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://leon-cappuccino.github.io/tags/bitmap/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bitmap</title>
+      <link>https://leon-cappuccino.github.io/posts/bitmap/</link>
+      <pubDate>Tue, 08 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://leon-cappuccino.github.io/posts/bitmap/</guid>
+      <description>一、为何使用bitmap? 1.内存中的图片加载 加载位于res/drawable中的项目图片资源文件我们可以通过ImageView的setImageResource(int id)传入图片资源的id来进行加载，但是如果加载手机本地文件，需要先将图片加载到内存中，而bitmap就是一张图片在内存中的表达形式，即位图。
+2. Android如何将一张图片加载到内存在显示呢？ Android通过将图片以bitmap的形式加载到内存中，再通过ImageView的setImageBitmap(Bitmap b)来展示Bitmap对象中的内容。
+3. Bitmap的原理 图片含有丰富的信息，为了表示出图片的信息，采用无限到有限的思想，将一张图片用有限的像素点表示，每个像素点采用ARGB的形式通过四个通道表示，其中A表示透明度，RGB即红绿蓝三色通道，每个通道在0~255，即一个字节/8个bit表示，因此一个像素用4个字节表示。
+二、bitmap使用优化 1.像素压缩 存储空间是一个开发者不得不考虑的问题，在实际使用中我们真的需要一个像素点用8bit来表示吗，如果每个通道用更少的bit表示会占用更少的空间，因此Bitmap给了开发者调节大小的方式——Bitmap.Config。
+Config是Bitmap的一个枚举内部类，它表示的就是每个像素点对ARGB通道值的存储方案。取值有以下四种：
+（1）ARGB_8888:每个通道8bit表示，图像质量最好，占用内存最大。
+（2）ARGB_4444:每个通道4bit表示，图片失真严重，一般我们不使用。
+（3）RGB_565:RGB通道值分别占5、6、5位，没有存储A通道值，所以不支持透明度，图片质量是ARGB_8888一半。
+（4）ALPHA_8:不支持颜色值，只存储透明度，使用场景一般为设置遮盖效果。
+总结：一般我们在ARGB_8888方式和RGB_565方式中进行选取。
+使用场景选择：在使用拍摄的照片时由于不需要透明度，RGB_565是个不错的方案。需要透明度还要求图像质量高，使用ARGB_8888。
+2.存储压缩 bitmap是图像在内存中的表现形式，如果需要将bitmap持久化为本地图片，就必须对bitmap进行存储压缩，即使用压缩算法进行存储，常见的压缩算法有GIF、JPEG、BMP、PNG和WebP.
+(1)GIF:Gif是一种基于LZW算法的无损压缩格式，其压缩率一般在50％左右。Gif可插入多帧，从而实现动画效果.
+(2)BMP:BMP是标准图形格式。本质就是Bitmap对象直接持久化保存的位图文件格式，由于没有进行压缩存储，因此体积非常大，不适合在网络上传输。
+(3)PNG：PNG属于无损压缩。PNG的压缩率高于Gif格式，而且PNG支持的颜色数量远高于Gif。
+(4)JPEG：有损压缩格式。JPEG图片以24位颜色压缩存储单个位图,即JPEG不支持透明通道，也不支持多帧动画。
+(5)WebP:WebP 是 Google 在 2010 年发布的图片格式，希望以更高的压缩率替代 JPEG。WebP支持有损和无损压缩、支持完整的透明通道、也支持多帧动画，并且没有版权问题，是一种非常理想的图片格式。
+优点：相同质量的无损压缩WebP图片体积比PNG小大约26%；如果是有损压缩，相同质量的WebP图片体积比JPEG小25%-34%。
+缺点：压缩时间长，WebP图片的编码时间比JPEG长8倍。
+三、bitmap的创建 Bitmap是一个被final修饰的类，不能被继承，也无法通过构造函数来新建一个bitmap对象，如果我们要创建bitmap对象，有两种方式来得到：
+1.静态方法createBitmap() createBitmap()方法一种有13种，同时这些方法大致可以分为三类：
+(1)通过已有的bitmap来创建bitmap /** * @param source 原始 Bitmap * @param x 在原始 Bitmap 中 x方向的其起始坐标（你可能只需要原始 Bitmap x方向上的一部分） * @param y 在原始 Bitmap 中 y方向的其起始坐标（你可能只需要原始 Bitmap y方向上的一部分） * @param width 需要返回 Bitmap 的宽度（px）（如果超过原始Bitmap宽度会报错） * @param height 需要返回 Bitmap 的高度（px）（如果超过原始Bitmap高度会报错） * @param m Matrix类型，表示需要做的变换操作 * @param filter 是否需要过滤，只有 matrix 变换不只有平移操作才有效 */ public static Bitmap createBitmap(@NonNull Bitmap source, int x, int y, int width, int height,@Nullable Matrix m, boolean filter) (2)通过设置像素格式创建bitmap /** * @param display 显示将显示此位图的显示的度量标准 * @param colors 用于初始化像素的sRGB数组 * @param offset 颜色数组中第一个颜色之前要跳过的值的数量 * @param stride 行之间数组中的颜色数（必须&amp;gt; = width或&amp;lt;= -width） * @param width 位图的宽度 * @param height 位图的高度 * @param config 要创建的位图配置。如果配置不支持每像素alpha（例如RGB_565） */  public static Bitmap createBitmap(@NonNull DisplayMetrics display,  @NonNull @ColorInt int[] colors, int offset, int stride,  int width, int height, @NonNull Config config) (3)创建缩放的bitmap public static Bitmap createScaledBitmap(@NonNull Bitmap src, int dstWidth, int dstHeight,boolean filter) 2.</description>
+    </item>
+    
+  </channel>
+</rss>

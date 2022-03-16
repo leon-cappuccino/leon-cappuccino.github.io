@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>自定义控件 | Leon Blog</title>
+    <meta property="og:title" content="自定义控件 - Leon Blog">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="自定义控件">
+        
+    <meta name="author" content="">
+    <meta property="og:url" content="https://leon-cappuccino.github.io/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml" href="https://leon-cappuccino.github.io/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/index.xml" title="Leon Blog" />
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://leon-cappuccino.github.io/">
+                        Leon Blog
+                    </a>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://leon-cappuccino.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <h3 class="archive-title">
+        分类
+        <span class="keyword">自定义控件</span>
+        中的文章
+    </h3>
+    
+
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://leon-cappuccino.github.io/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/">自定义控件</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年3月5日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6'>自定义控件</a>
+            
+            <a href='/categories/android%E5%9F%BA%E7%A1%80'>Android基础</a>
+            
+        </div>
+        
+        <div class="post-content">
+            一、自定义控件三大函数 自定义控件有三个很重要的函数，onMeasure、onLayout和onDraw，其中onMeasure用来测量自定义控件的高和宽，onLayout给出自定义控件的位置，onDraw最后根据控件大小和位置绘制自定义控件。其中onDraw是必须实现的函数，另外两个函数不是必须实现。
+1.onMeasure 在绘制控件前必须要经历measure的过程，这个过程从最外层的PhoneWindow开始进行，phonewindow调用内部frameLayout的measure，frameLayout又调用内部view的onMeasure，依次类推，尤其是对于measure的过程，由于布局的控件可以抽象为一棵树，measure的过程将会是一种中序遍历。
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) widthMeasureSpec和heightMeasureSpec这两个值通常情况下都是由父视图经过计算后传递给子视图的。
+（1）什么时候需要实现onMeasure 如果自定义控件的尺寸与父布局大小相同，不需要重写onMeasure，如果需要特定大小的自定义控件，就需要实现onMeasure。
+（2）MeasureSpec MeasureSpec是一个类，封装了父布局传递给子布局的布局要求，MeasureSpec由size和mode组成。MeasureSpec转化成二进制是一个32位的值，其中前两位为mode，后30位为size。
+1）specMode specMode一种有三种类型，EXACTLY、AT_MOST 和UNSPECIFIED。
+MeasureSpec.AT_MOST = 2 MeasureSpec.EXACTLY = 1 MeasureSpec.UNSPECIFIED = 0 EXACTLY表示父元素决定自定义控件的确切大小，对应的是match_parent，当mode为EXACTLY，不需要设定尺寸，因为尺寸已经确定。
+AT_MOST表示子元素至多达到指定大小的值，对应wrap_content,mode为AT_MOST就需要我们来设定尺寸。
+UNSPECIFIED表示开发人员可以将视图按照自己的意愿设置成任意的大小，没有任何限制，一般不使用。
+2）通过MeasureSpec获得相关值 通常我们需要通过MeasureSpec获得mode和size，通过mode的值来设定自定义控件的尺寸，因此获得这些值通过以下方式：
+int measureWidth = MeasureSpec.getSize(widthMeasureSpec); int measureHeight = MeasureSpec.getSize(heightMeasureSpec); int measureWidthMode = MeasureSpec.getMode(widthMeasureSpec); int measureHeightMode = MeasureSpec.getMode(heightMeasureSpec); （3）使用方式 setMeasuredDimension((measureWidthMode == MeasureSpec.EXACTLY) ? measureWidth: width, (measureHeightMode == MeasureSpec.EXACTLY) ? measureHeight: height); 2.onLayout @Override protected abstract void onLayout(boolean changed, int l, int t, int r, int b); onLayout将ViewGroup里的每一个子View放置在一定的位置，注意onLayout在ViewGroup中定义是抽象函数，继承ViewGroup来实现一个自定义布局就必须重写onLayout方法，ViewGroup的onMeasure并非必须重写的。……
+            <p class="readmore"><a href="https://leon-cappuccino.github.io/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/">阅读全文</a></p>
+        </div>
+    </article>
+    
+
+    
+
+
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://leon-cappuccino.github.io/">Leon Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://leon-cappuccino.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/" title="Android本地数据存储">Android本地数据存储</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="Android网络技术">Android网络技术</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/jetpack/" title="Jetpack">Jetpack</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/" title="Android面试题之四大组件">Android面试题之四大组件</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/bitmap/" title="Bitmap">Bitmap</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/" title="自定义控件">自定义控件</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E5%9F%BA%E7%A1%80/">Android基础 (4)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Android基础知识 (2)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E7%BD%91%E7%BB%9C/">Android网络 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/jetpack/">Jetpack (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E6%95%B0%E6%8D%AE/">数据 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">自定义控件 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E9%9D%A2%E8%AF%95/">面试 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://leon-cappuccino.github.io/tags/android%E5%9F%BA%E7%A1%80/">Android基础</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/bitmap/">bitmap</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/jetpack/">Jetpack</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/retrofit/">retrofit</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/">四大组件</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">本地数据存储</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">自定义控件</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://leon-cappuccino.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

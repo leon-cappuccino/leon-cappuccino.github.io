@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jetpack on Leon Blog</title>
+    <link>https://leon-cappuccino.github.io/tags/jetpack/</link>
+    <description>Recent content in Jetpack on Leon Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://leon-cappuccino.github.io/tags/jetpack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jetpack</title>
+      <link>https://leon-cappuccino.github.io/posts/jetpack/</link>
+      <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://leon-cappuccino.github.io/posts/jetpack/</guid>
+      <description>Jetpack Jetpack是一套组件库，使用 Jetpack 可以帮助我们在不同的 Android 版本和不同的设备上，实现行为一致的工作代码，换言之解决了由于Android版本或者设备不同的兼容性问题。
+目前 Jetpack 一共有 85 个组件库，我们可以将这些组件分为好几类，在此我们只介绍一些比较重要的类别。
+核心库：
+   组件名称 说明     activity.* 用于activity相关   arch.core 架构组件辅助   core Android核心库   fragment* fragment工具包   annotation 注解   Customview 自定义view的辅助类   collection Android中为了优化内存设计的数据结构    架构组件：架构组件结合MVVM的架构设计，用于处理UI与业务逻辑。
+   组件名称 说明     lifecycle* 最重要的组件之一，生命周期处理组件   room* SQL数据类相关   work* WorkManager，后台任务调度   databinding* 在xml中绑定view和model   navigation* 单activity多fragment导航处理框架   datastore Preference替代类，支持异步处理，更安全   savedstate 临时保存数据，保证用户数据不丢失   &amp;hellip; &amp;hellip;    UI组件：</description>
+    </item>
+    
+  </channel>
+</rss>

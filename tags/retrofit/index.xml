@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>retrofit on Leon Blog</title>
+    <link>https://leon-cappuccino.github.io/tags/retrofit/</link>
+    <description>Recent content in retrofit on Leon Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://leon-cappuccino.github.io/tags/retrofit/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Android网络技术</title>
+      <link>https://leon-cappuccino.github.io/posts/android%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://leon-cappuccino.github.io/posts/android%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/</guid>
+      <description>Android网络技术 使用网络需要添加网络权限
+&amp;lt;uses-permission android:name=&amp;#34;android.permission.INTERNET&amp;#34;/&amp;gt; Retrofit 添加依赖:
+implementation &amp;#39;com.squareup.retrofit2:retrofit:2.6.1&amp;#39; //导入Retrofit、OkHttp和Okio库 implementation &amp;#39;com.squareup.retrofit2:converter-gson:2.6.1&amp;#39; //Retrofit的转换库:GSON库 Retrofit是基于OkHttp开发的，OkHttp侧重于底层，Retrofit更侧重于顶层封装。
+retrofit共有22个注解，其中22个注解又可以分为请求方法类，标记类和参数类。
+1.Retrofit的使用方法 例如在一个天气App的开发中，我们想要服务器的API接口
+https://api.caiyunapp.com/v2/place?query=北京&amp;amp;token={token}&amp;amp;lang=zh_CN 返回的接口数据如下
+{&amp;#34;status&amp;#34;:&amp;#34;ok&amp;#34;,&amp;#34;query&amp;#34;:&amp;#34;北京&amp;#34;, &amp;#34;places&amp;#34;:[ {&amp;#34;name&amp;#34;:&amp;#34;北京市&amp;#34;,&amp;#34;location&amp;#34;:{&amp;#34;lat&amp;#34;:39.9041999,&amp;#34;lng&amp;#34;:116.4073963}, &amp;#34;formatted_address&amp;#34;:&amp;#34;中国北京市&amp;#34;}, {&amp;#34;name&amp;#34;:&amp;#34;北京西站&amp;#34;,&amp;#34;location&amp;#34;:{&amp;#34;lat&amp;#34;:39.89491,&amp;#34;lng&amp;#34;:116.322056}, &amp;#34;formatted_address&amp;#34;:&amp;#34;中国 北京市 丰台区 莲花池东路118号&amp;#34;}, {&amp;#34;name&amp;#34;:&amp;#34;北京南站&amp;#34;,&amp;#34;location&amp;#34;:{&amp;#34;lat&amp;#34;:39.865195,&amp;#34;lng&amp;#34;:116.378545}, &amp;#34;formatted_address&amp;#34;:&amp;#34;中国 北京市 丰台区 永外大街车站路12号&amp;#34;} ]} （1）定义数据接收模型 首先根据接口返回的数据定义数据模型，新建PlaceResponse文件
+class PlaceResponse(val status: String, val places: List&amp;lt;Place&amp;gt;)  class Place(val name: String, val location: Location, @SerializedName(&amp;#34;formatted_address&amp;#34;) val address: String)  class Location(val lng: String, val lat: String) @SerializedName注解可以将json中的属性名转为我们自己自定义的属性名，即将formatted_address转换为address。
+（2）定义访问API的retrofit接口 我们需要定义一个API接口将数据接收模型
+对于API接口
+https://api.caiyunapp.com/v2/place?query=北京&amp;amp;token={token}&amp;amp;lang=zh_CN 动态变化指定的参数为query，对于这样的API我们使用@Query用于 @GET 方法的查询参数。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>本地数据存储 | Leon Blog</title>
+    <meta property="og:title" content="本地数据存储 - Leon Blog">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="本地数据存储">
+        
+    <meta name="author" content="">
+    <meta property="og:url" content="https://leon-cappuccino.github.io/tags/%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml" href="https://leon-cappuccino.github.io/tags/%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/index.xml" title="Leon Blog" />
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://leon-cappuccino.github.io/">
+                        Leon Blog
+                    </a>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://leon-cappuccino.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <h3 class="archive-title">
+        包含标签
+        <span class="keyword">本地数据存储</span>
+        的文章
+    </h3>
+    
+
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://leon-cappuccino.github.io/posts/android%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">Android本地数据存储</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年3月13日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/%E6%95%B0%E6%8D%AE'>数据</a>
+            
+            <a href='/categories/android%E5%9F%BA%E7%A1%80'>Android基础</a>
+            
+        </div>
+        
+        <div class="post-content">
+            Android本地数据存储 SharedPreferences SharedPreferences是Android平台上一个轻量级的存储辅助类，用来保存应用的一些常用配置，SharedPreferences是使用键值对的方式来存储数据的
+1.将数据存储到SharedPreferences中 （1）获得SharedPreferences.Editor对象 首先我们通过Activity类中的getSharedPreferences方法获取SharedPreferences对象，其中第一个参数为文件名称，第二个参数为操作模式，目前只有默认的MODE_PRIVATE可选，表示只有当前的应用程序才可以对这个SharedPreferences文件进行读写。
+我们在之后操作中需要使用的是SharedPreferences.Editor对象，通过SharedPreferences对象的edit()方法得到。
+ val editor = getSharedPreferences(&#34;data&#34;, Context.MODE_PRIVATE).edit() （2）向SharedPreferences.Editor对象中添加数据 通过使用对应数据类型的putxxx方法以键值对的方式向SharedPreferences.Editor对象中添加数据。
+ editor.putString(&#34;name&#34;, &#34;Tom&#34;)  editor.putInt(&#34;age&#34;, 28)  editor.putBoolean(&#34;married&#34;, false) （3）调用apply()方法将添加的数据提交 editor.apply() 之后我们可以在对应项目的shared_prefs/目录下看到data.xml文件
+2.从SharedPreferences中读取数据 读取数据比较简单，首先我们需要获取一个SharedPreferences对象，之后使用对应的getxxx方法就可以读取data.xml中的值
+ val prefs = getSharedPreferences(&#34;data&#34;, Context.MODE_PRIVATE) //第二个参数表示如果获取失败默认返回值  val name = prefs.getString(&#34;name&#34;, &#34;&#34;)  val age = prefs.getInt(&#34;age&#34;, 0)  val married = prefs.getBoolean(&#34;married&#34;, false) SQLite SQLite是一款轻量级的关系型数据库，内置于Android，它的运算速度非常快，占用资源很少，支持标准的SQL语法，还遵循了数据库的ACID事务。
+1.如何创建数据库？ Android提供了SQLiteOpenHelper帮助类来对SQLite进行创建和升级，SQLiteOpenHelper是一个抽象类，继承它之后需要重写它的两个抽象方法onCreate()和onUpgrade()。
+（1）继承SQLiteOpenHelper 首先我们需要新建类来继承SQLiteOpenHelper，通过SQL语句创建数据库，为了可以执行SQL语句，我们需要借助onCreate中的参数SQLiteDatabase，该参数的方法execSQL(string sql)可以执行非SELECT或其他不返回数据的单个SQL语句。
+class MyDatabaseHelper(val context: Context, name: String, version: Int) :  SQLiteOpenHelper(context, name, null, version) {  private val createBook = &#34;create table Book (&#34; +  &#34; id integer primary key autoincrement,&#34; +  &#34;author text,&#34; +  &#34;price real,&#34; +  &#34;pages integer,&#34; +  &#34;name text)&#34;  override fun onCreate(db: SQLiteDatabase) {  db.……
+            <p class="readmore"><a href="https://leon-cappuccino.github.io/posts/android%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">阅读全文</a></p>
+        </div>
+    </article>
+    
+
+    
+
+
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://leon-cappuccino.github.io/">Leon Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://leon-cappuccino.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/" title="Android本地数据存储">Android本地数据存储</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="Android网络技术">Android网络技术</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/jetpack/" title="Jetpack">Jetpack</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/" title="Android面试题之四大组件">Android面试题之四大组件</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/bitmap/" title="Bitmap">Bitmap</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/" title="自定义控件">自定义控件</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E5%9F%BA%E7%A1%80/">Android基础 (4)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Android基础知识 (2)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E7%BD%91%E7%BB%9C/">Android网络 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/jetpack/">Jetpack (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E6%95%B0%E6%8D%AE/">数据 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">自定义控件 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E9%9D%A2%E8%AF%95/">面试 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://leon-cappuccino.github.io/tags/android%E5%9F%BA%E7%A1%80/">Android基础</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/bitmap/">bitmap</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/jetpack/">Jetpack</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/retrofit/">retrofit</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/">四大组件</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">本地数据存储</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">自定义控件</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://leon-cappuccino.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

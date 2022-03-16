@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>自定义控件 on Leon Blog</title>
+    <link>https://leon-cappuccino.github.io/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/</link>
+    <description>Recent content in 自定义控件 on Leon Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 05 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://leon-cappuccino.github.io/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>自定义控件</title>
+      <link>https://leon-cappuccino.github.io/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/</link>
+      <pubDate>Sat, 05 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://leon-cappuccino.github.io/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/</guid>
+      <description>一、自定义控件三大函数 自定义控件有三个很重要的函数，onMeasure、onLayout和onDraw，其中onMeasure用来测量自定义控件的高和宽，onLayout给出自定义控件的位置，onDraw最后根据控件大小和位置绘制自定义控件。其中onDraw是必须实现的函数，另外两个函数不是必须实现。
+1.onMeasure 在绘制控件前必须要经历measure的过程，这个过程从最外层的PhoneWindow开始进行，phonewindow调用内部frameLayout的measure，frameLayout又调用内部view的onMeasure，依次类推，尤其是对于measure的过程，由于布局的控件可以抽象为一棵树，measure的过程将会是一种中序遍历。
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) widthMeasureSpec和heightMeasureSpec这两个值通常情况下都是由父视图经过计算后传递给子视图的。
+（1）什么时候需要实现onMeasure 如果自定义控件的尺寸与父布局大小相同，不需要重写onMeasure，如果需要特定大小的自定义控件，就需要实现onMeasure。
+（2）MeasureSpec MeasureSpec是一个类，封装了父布局传递给子布局的布局要求，MeasureSpec由size和mode组成。MeasureSpec转化成二进制是一个32位的值，其中前两位为mode，后30位为size。
+1）specMode specMode一种有三种类型，EXACTLY、AT_MOST 和UNSPECIFIED。
+MeasureSpec.AT_MOST = 2 MeasureSpec.EXACTLY = 1 MeasureSpec.UNSPECIFIED = 0 EXACTLY表示父元素决定自定义控件的确切大小，对应的是match_parent，当mode为EXACTLY，不需要设定尺寸，因为尺寸已经确定。
+AT_MOST表示子元素至多达到指定大小的值，对应wrap_content,mode为AT_MOST就需要我们来设定尺寸。
+UNSPECIFIED表示开发人员可以将视图按照自己的意愿设置成任意的大小，没有任何限制，一般不使用。
+2）通过MeasureSpec获得相关值 通常我们需要通过MeasureSpec获得mode和size，通过mode的值来设定自定义控件的尺寸，因此获得这些值通过以下方式：
+int measureWidth = MeasureSpec.getSize(widthMeasureSpec); int measureHeight = MeasureSpec.getSize(heightMeasureSpec); int measureWidthMode = MeasureSpec.getMode(widthMeasureSpec); int measureHeightMode = MeasureSpec.getMode(heightMeasureSpec); （3）使用方式 setMeasuredDimension((measureWidthMode == MeasureSpec.EXACTLY) ? measureWidth: width, (measureHeightMode == MeasureSpec.EXACTLY) ? measureHeight: height); 2.onLayout @Override protected abstract void onLayout(boolean changed, int l, int t, int r, int b); onLayout将ViewGroup里的每一个子View放置在一定的位置，注意onLayout在ViewGroup中定义是抽象函数，继承ViewGroup来实现一个自定义布局就必须重写onLayout方法，ViewGroup的onMeasure并非必须重写的。</description>
+    </item>
+    
+  </channel>
+</rss>

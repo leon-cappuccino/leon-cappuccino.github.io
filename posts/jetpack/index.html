@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Jetpack | Leon Blog</title>
+    <meta property="og:title" content="Jetpack - Leon Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-03-11T00:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-03-11T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="Jetpack是一套组件库，Jetpack可以帮助我们在不同的 Android 版本和不同的设备上，实现行为一致的工作代码">
+        
+    <meta name="author" content="">
+    <meta property="og:url" content="https://leon-cappuccino.github.io/posts/jetpack/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://leon-cappuccino.github.io/">
+                        Leon Blog
+                    </a>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://leon-cappuccino.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">Jetpack</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年3月11日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/jetpack'>Jetpack</a></span>
+            
+            <span class="meta-category"><a href='/categories/android%E5%9F%BA%E7%A1%80'>Android基础</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <h1 id="jetpack">Jetpack</h1>
+<p>Jetpack是一套组件库，使用 Jetpack 可以帮助我们在不同的 Android 版本和不同的设备上，实现行为一致的工作代码，换言之解决了由于Android版本或者设备不同的兼容性问题。</p>
+<p>目前 Jetpack 一共有 85 个组件库，我们可以将这些组件分为好几类，在此我们只介绍一些比较重要的类别。</p>
+<p><strong>核心库</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>组件名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>activity.*</td>
+<td>用于activity相关</td>
+</tr>
+<tr>
+<td>arch.core</td>
+<td>架构组件辅助</td>
+</tr>
+<tr>
+<td>core</td>
+<td>Android核心库</td>
+</tr>
+<tr>
+<td>fragment*</td>
+<td>fragment工具包</td>
+</tr>
+<tr>
+<td>annotation</td>
+<td>注解</td>
+</tr>
+<tr>
+<td>Customview</td>
+<td>自定义view的辅助类</td>
+</tr>
+<tr>
+<td>collection</td>
+<td>Android中为了优化内存设计的数据结构</td>
+</tr>
+</tbody>
+</table>
+<p><strong>架构组件</strong>：架构组件结合MVVM的架构设计，用于处理UI与业务逻辑。</p>
+<table>
+<thead>
+<tr>
+<th>组件名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lifecycle*</td>
+<td>最重要的组件之一，生命周期处理组件</td>
+</tr>
+<tr>
+<td>room*</td>
+<td>SQL数据类相关</td>
+</tr>
+<tr>
+<td>work*</td>
+<td>WorkManager，后台任务调度</td>
+</tr>
+<tr>
+<td>databinding*</td>
+<td>在xml中绑定view和model</td>
+</tr>
+<tr>
+<td>navigation*</td>
+<td>单activity多fragment导航处理框架</td>
+</tr>
+<tr>
+<td>datastore</td>
+<td>Preference替代类，支持异步处理，更安全</td>
+</tr>
+<tr>
+<td>savedstate</td>
+<td>临时保存数据，保证用户数据不丢失</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+</tbody>
+</table>
+<p><strong>UI组件</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>组件名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>constraintlayout</td>
+<td>约束布局</td>
+</tr>
+<tr>
+<td>coordinatorlayout</td>
+<td>顶层布局继承自FrameLayout，可以实现子view之间联动效果</td>
+</tr>
+<tr>
+<td>interpolator</td>
+<td>动画插值器</td>
+</tr>
+<tr>
+<td>recyclerview</td>
+<td>滑动列表</td>
+</tr>
+<tr>
+<td>swiperefreshlayout</td>
+<td>下拉刷新布局</td>
+</tr>
+<tr>
+<td>drawerlayout</td>
+<td>抽屉布局</td>
+</tr>
+<tr>
+<td>compose</td>
+<td>声明式UI</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+</tbody>
+</table>
+<p>除了上面三类外还有特殊业务组件，根据具体的业务场景使用，如相机，生物识别</p>
+<h2 id="lifecycle库">Lifecycle库</h2>
+<p>在架构组件中，有一个很重要的库lifecycle库，该库主要包含了<code>Lifecycle</code>、<code>ViewModel</code>和<code>LiveData</code>三大组件，当我们使用这三个组件时需要添加依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>implementation &#34;androidx.lifecycle:lifecycle-extensions:2.2.0&#34;
+</span></span></code></pre></div><h3 id="一viewmodel">一、<code>ViewModel</code></h3>
+<p>ViewModel是专门用来存放页面数据的，是View和Model之间的桥梁，ViewModel的生命周期比activity和fragment都要长，尤其对于旋转屏幕后Activity重新创建并不会影响ViewModel，数据仍然存在。</p>
+<h4 id="1viewmodel的基本使用">1.<code>ViewModel</code>的基本使用</h4>
+<h5 id="1无参数viewmodel">（1）无参数ViewModel</h5>
+<p>ViewModel是一个抽象类，只有一个<code>onCleared()</code>方法。当ViewModel不再被需要，即与之相关的Activity都被销毁时，该方法会被系统调用。</p>
+<p>通常我们为某个activity创建其ViewModel时继承ViewModel，并在该类内创建需要持久化的数据，通常我们会结合LiveData进行。当我们在activity中使用时，**绝对不可以直接在activity中创建ViewModel的实例，而是一定要通过<code>ViewModelProvider</code>来获取ViewModel的实例。**这样写的因为是ViewModel的生命周期长于activity，每次在<code>onCreate</code>方法中创建将无法保存数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>viewModel = ViewModelProvider(<span style="color:#66d9ef">this</span>).<span style="color:#66d9ef">get</span>(MainViewModel<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>.java)
+</span></span></code></pre></div><h5 id="2向viewmodel传递参数">（2）向ViewModel传递参数</h5>
+<p>如果我们需要向ViewModel中传递参数，需要借助<code>ViewModelProvider.Factory</code>实现。例如如果我们需要做一个计时器，使用ViewModel虽然可以保证旋转屏幕时不会丢失数据，但是当我们退出程序重新打开将会丢失之前的数据，如果我们希望数据不会被丢失，就需要将推出程序之前的数据本地持久化，本地持久化数据通常使用<code>SharedPreferences</code>，再次打开程序时读取之前数据，并传入ViewModel。</p>
+<p>具体来说，以<code>MainActivity</code>为例，我们创建<code>MainViewModel</code>继承ViewModel，给<code>MainActivity</code>一个<code>countReserved</code>来传入之前保存的数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MainViewModel</span>(countReserved: Int) : ViewModel() {
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">var</span> counter = countReserved
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>接下来我们需要新建一个<code>MainViewModelFactory</code>类，该类实现<code>ViewModelProvider.Factory</code>接口，该接口要求实现create方法，同时<code>MainViewModelFactory</code>也需要传入<code>MainViewModel</code>的参数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MainViewModelFactory</span>(<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> countReserved: Int) : ViewModelProvider.Factory {
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> &lt;<span style="color:#a6e22e">T</span> : <span style="color:#a6e22e">ViewModel</span>&gt; <span style="color:#a6e22e">create</span>(modelClass: Class&lt;T&gt;): T {
+</span></span><span style="display:flex;"><span> 		<span style="color:#66d9ef">return</span> MainViewModel(countReserved) <span style="color:#66d9ef">as</span> T
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>之后我们在MainActivity中通过ViewModelProvider多传入一个MainViewModelFactory即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>viewModel = ViewModelProvider(<span style="color:#66d9ef">this</span>, MainViewModelFactory(countReserved))
+</span></span><span style="display:flex;"><span> .<span style="color:#66d9ef">get</span>(MainViewModel<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>.java)
+</span></span></code></pre></div><h3 id="二lifecycles">二、<code>Lifecycles</code></h3>
+<p><code>Lifecycles</code>可以在非activity类中去观察Activity与Fragment生命周期状态</p>
+<h4 id="1lifecycles的使用">1.<code>Lifecycles</code>的使用</h4>
+<h5 id="1创建实现lifecycleobserver接口的类">（1）创建实现<code>LifecycleObserver</code>接口的类</h5>
+<p>我们新建MyObserver直接实现<code>LifecycleObserver</code>接口，由于<code>LifecycleObserver</code>是一个空方法接口，不需要实现任何方法。如果想要感知到Activity的生命周期，我们需要借助<code>@OnLifecycleEvent</code>注解，同时在注解中传入生命周期事件。</p>
+<p>生命周期事件的类型一共有7种：<code>ON_CREATE</code>、<code>ON_START</code>、<code>ON_RESUME</code>、<code>ON_PAUSE</code>、
+<code>ON_STOP</code>和<code>ON_DESTROY</code>分别匹配Activity中相应的生命周期回调；另外还有一种<code>ON_ANY</code>类型，表示可以匹配Activity的任何生命周期回调。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyObserver</span> : LifecycleObserver {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@OnLifecycleEvent</span>(Lifecycle.Event.ON_START)
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">activityStart</span>() {
+</span></span><span style="display:flex;"><span> 		Log.d(<span style="color:#e6db74">&#34;MyObserver&#34;</span>, <span style="color:#e6db74">&#34;activityStart&#34;</span>)
+</span></span><span style="display:flex;"><span> 	}
+</span></span><span style="display:flex;"><span> 	<span style="color:#a6e22e">@OnLifecycleEvent</span>(Lifecycle.Event.ON_STOP)
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">activityStop</span>() {
+</span></span><span style="display:flex;"><span> 		Log.d(<span style="color:#e6db74">&#34;MyObserver&#34;</span>, <span style="color:#e6db74">&#34;activityStop&#34;</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面我们自定义的两个方法将会在<code>onStart()</code>和<code>onStop()</code>触发的时候执行。</p>
+<h5 id="2在lifecycleowner中添加">（2）在<code>LifecycleOwner</code>中添加</h5>
+<p>是继承自AppCompatActivity的activity或者Fragment是继承自androidx.fragment.app.Fragment，则activity和fragment本身就是一个<code>LifecycleOwner</code>，之后调用<code>LifecycleOwner</code>的<code>getLifecycle()</code>方法，得到一个Lifecycle对象，然后调用它的<code>addObserver()</code>方法来观察<code>LifecycleOwner</code>的生命周期，传入实例。在<code>LifecycleOwner</code>内部可以省略lifecycleOwner直接使用<code>lifecycle.addObserver(MyObserver())</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>lifecycleOwner.lifecycle.addObserver(MyObserver())
+</span></span></code></pre></div><p>如果想主动获取当前生命周期状态，可以在<code>MyObserver</code>中传入Lifecycle，调用<code>lifecycle.currentState</code>就可以主动获知当前的生命周期状态。<code>lifecycle.currentState</code>返回的生命周期状态是一个枚举类型，一共有<code>INITIALIZED</code>、<code>DESTROYED</code>、<code>CREATED</code>、<code>STARTED</code>、<code>RESUMED</code>这5种状态类型，对应关系如下图。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyObserver</span>(<span style="color:#66d9ef">val</span> lifecycle: Lifecycle) : LifecycleObserver {
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">..</span>.
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<h3 id="三livedata">三、<code>LiveData</code></h3>
+<p><code>LiveData</code>是Jetpack提供的一种响应式编程组件，它可以包含任何类型的数据，并在数据发生
+变化的时候通知给观察者。通常<code>LiveData</code>与<code>ViewModel</code>结合使用。</p>
+<h4 id="1mutablelivedata与livedata">1.<code>MutableLiveData</code>与<code>LiveData</code></h4>
+<p><code>LiveData</code>是一个抽象类，不能直接使用，所以通常我们使用它的直接子类<code>MutableLiveData</code>。<code>MutableLiveData</code>是一种可变的<code>LiveData</code>，主要有3种读写数据的方法，分别是<code>getValue()</code>、<code>setValue()</code>和<code>postValue()</code>方法。</p>
+<p><code>getValue()</code>方法用于获取<code>LiveData</code>中包含的数据；<code>setValue()</code>方法用于给<code>LiveData</code>设置数
+据，但是只能在主线程中调用；<code>postValue()</code>方法用于在非主线程中给<code>LiveData</code>设置数据。</p>
+<p>以计时器的代码为例，我们将ViewModel修改为如下，<code>MutableLiveData</code>是可变<code>LiveData</code>，因此不能暴露给外部，使用不可变的<code>LiveData</code>，保证数据封装性。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MainViewModel</span>(countReserved: Int) : ViewModel() {
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">val</span> counter: LiveData&lt;Int&gt;
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">get</span>() = _counter
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> _counter = MutableLiveData&lt;Int&gt;()
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">init</span> {
+</span></span><span style="display:flex;"><span> 		_counter.value = countReserved
+</span></span><span style="display:flex;"><span> 	}
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">plusOne</span>() {
+</span></span><span style="display:flex;"><span> 		<span style="color:#66d9ef">val</span> count = _counter.value <span style="color:#f92672">?:</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span> 		_counter.value = count + <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> 	}
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">clear</span>() {
+</span></span><span style="display:flex;"><span> 		_counter.value = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span> 	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>之后在<code>MainActivity</code>中，我们通过<code>LiveData</code>的observe方法观测数据变化：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>viewModel.counter.observe(<span style="color:#66d9ef">this</span>, Observer { count <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span> 	infoText.text = count.toString()
+</span></span><span style="display:flex;"><span> })
+</span></span></code></pre></div><p>当_counter的值发生变化，就会回调到上面observe方法中的onchange内的方法逻辑，更新UI。</p>
+<h4 id="2map和switchmap">2.map和<code>switchMap</code></h4>
+<p>map和<code>switchMap</code>都是Transformations的方法。</p>
+<h5 id="1map">（1）map</h5>
+<p>map解决了这样一个问题：如果我们有一个类User是封装的，不可以暴露给外部的，但是我们想观测该类并得到该分装类中的一部分参数如Name，这种情况下就可以使用map，map可以将User类型的<code>LiveData</code>自由地转型成任意其他类型的<code>LiveData</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> userLiveData = MutableLiveData&lt;User&gt;()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">val</span> userName: LiveData&lt;String&gt; = Transformations.map(userLiveData) { user <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span> 	<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${user.firstName}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">${user.lastName}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span> }
+</span></span></code></pre></div><p>当userLiveData的数据发生变化时，map()方法会监听到变化并执行转换函数中的逻辑，然后再将转换之后的数据通知给userName的观察者。</p>
+<h5 id="2switchmap">（2）<code>switchMap</code></h5>
+<p>map适用于LiveData对象的实例创建在ViewModel中，如果ViewModel中的某个LiveData对象是调用另外的方法获取的，那这种情况下我们直接去观测LiveData就无法得到最新的数据。例如我们通常使用MVVM来写代码时的Repository类，通过<code>getUser</code>得到一个<code>LiveData</code>。如果我们直接观测这个对象就是错误的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Repository</span> {
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">getUser</span>(userId: String): LiveData&lt;User&gt; {
+</span></span><span style="display:flex;"><span> 		<span style="color:#66d9ef">val</span> liveData = MutableLiveData&lt;User&gt;()
+</span></span><span style="display:flex;"><span> 		liveData.value = User(userId, userId, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span> 		<span style="color:#66d9ef">return</span> liveData
+</span></span><span style="display:flex;"><span> 	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>switchMap()</code>方法将这个LiveData对象转换成一个可观察的LiveData对象。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MainViewModel</span>(countReserved: Int) : ViewModel() {
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">..</span>.
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> userIdLiveData = MutableLiveData&lt;String&gt;()
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">val</span> user: LiveData&lt;User&gt; = Transformations.switchMap(userIdLiveData) { userId <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span> 		Repository.getUser(userId)
+</span></span><span style="display:flex;"><span> 	}
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">getUser</span>(userId: String) {
+</span></span><span style="display:flex;"><span> 		userIdLiveData.value = userId
+</span></span><span style="display:flex;"><span> 	}
+</span></span></code></pre></div><p>首先我们重新定义一个<code>MutableLiveData</code>对象，用于观测<code>userId</code>，之后通过<code>switchMap</code>将其<code>Repository.getUser</code>返回的<code>LiveData</code>转换为可观测的对象user，后面我们观测user即可。</p>
+<h2 id="room">Room</h2>
+<p>Room是Android推出的一个ORM(Object Relational Mapping，对象关系映射）数据库框架。所谓ORM即使用的编程语言是面向对象语言，而使用的数据库则是关系型数据库，将面向对象的语言和面向关系的数据库之间建立一种映射关系。</p>
+<h3 id="1使用room需要添加依赖">1.使用Room需要添加依赖</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>apply plugin: &#39;com.android.application&#39;
+</span></span><span style="display:flex;"><span>apply plugin: &#39;kotlin-android&#39;
+</span></span><span style="display:flex;"><span>apply plugin: &#39;kotlin-android-extensions&#39;
+</span></span><span style="display:flex;"><span>apply plugin: &#39;kotlin-kapt&#39;
+</span></span><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span> ...
+</span></span><span style="display:flex;"><span> implementation &#34;androidx.room:room-runtime:2.1.0&#34;
+</span></span><span style="display:flex;"><span>//kapt只在kotlin中可以使用，使用前添加kotlin-kapt插件
+</span></span><span style="display:flex;"><span> kapt &#34;androidx.room:room-compiler:2.1.0&#34;
+</span></span><span style="display:flex;"><span>//java中使用annotationProcessor
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="2使用room进行增删改查">2.使用Room进行增删改查</h3>
+<p>Room主要由Entity、Dao和Database这3部分组成。</p>
+<p><strong>Entity</strong>：用于定义封装实际数据的实体类，每个实体类都会在数据库中有一张对应的表。</p>
+<p><strong>Dao</strong>：Dao(data access object，数据访问对象)，通常会在这里对数据库的各项操作进行封装。</p>
+<p><strong>Database</strong>：用于定义数据库中的关键信息，包括数据库的版本号、包含哪些实体类以及提供Dao层的访问实例。</p>
+<h4 id="1创建entity">（1）创建Entity</h4>
+<p>我们创建一个User类，一个好的数据库应该给每个实体类都添加一个id字段，并将这个字段设为主键。使用Room给User类进行Entity注解，使用<code>@PrimaryKey</code>将id设为主键，并使其自动生成。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#a6e22e">@Entity</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span>(<span style="color:#66d9ef">var</span> firstName: String, <span style="color:#66d9ef">var</span> lastName: String, <span style="color:#66d9ef">var</span> age: Int) {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">@PrimaryKey</span>(autoGenerate = <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">var</span> id: Long = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="2创建是实体类的dao">（2）创建是实体类的Dao</h4>
+<p>数据库通常有增删改查，对应了<code>@Insert</code>、<code>@Delete</code>、<code>@Update</code>和<code>@Query</code>这4种相应的注解。我们定义一个User的接口UserDao，加入@Dao注解，之后给出我们需要方法。<code>@Insert</code>、<code>@Delete</code>、<code>@Update</code>不需要写SQL语句，但是<code>@Query</code>需要具体化，因此必须在注解中加入SQL。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#a6e22e">@Dao</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserDao</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">@Insert</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">insertUser</span>(user: User): Long
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">@Update</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">updateUser</span>(newUser: User)
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">@Query</span>(<span style="color:#e6db74">&#34;select * from User&#34;</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">loadAllUsers</span>(): List&lt;User&gt;
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">@Query</span>(<span style="color:#e6db74">&#34;select * from User where age &gt; :age&#34;</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">loadUsersOlderThan</span>(age: Int): List&lt;User&gt;
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">@Delete</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">deleteUser</span>(user: User)
+</span></span><span style="display:flex;"><span> }
+</span></span></code></pre></div><h4 id="3定义database">（3）定义Database</h4>
+<p>定义一个抽象类<code>AppDatabase</code>并继承<code>RoomDatabase</code>，编写Database必须要给出三个内容：数据库的版本号、包含哪些实体类，以及提供Dao层的访问实例。数据库的版本号、包含哪些实体类在<code>@Database</code>中解决，提供Dao层的访问实例即给出实例的Dao抽象方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#a6e22e">@Database</span>(version = <span style="color:#ae81ff">1</span>, entities = [User<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>])
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AppDatabase</span> : RoomDatabase() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//提供相应的抽象方法，用于获取之前编写的Dao的实例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 	<span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">userDao</span>(): UserDao
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">companion</span> <span style="color:#66d9ef">object</span> {
+</span></span><span style="display:flex;"><span> 		<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> instance: AppDatabase? = <span style="color:#66d9ef">null</span>
+</span></span><span style="display:flex;"><span> 		<span style="color:#a6e22e">@Synchronized</span>
+</span></span><span style="display:flex;"><span> 		<span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">getDatabase</span>(context: Context): AppDatabase {
+</span></span><span style="display:flex;"><span> 			instance<span style="color:#f92672">?.</span>let {
+</span></span><span style="display:flex;"><span> 				<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">it</span>
+</span></span><span style="display:flex;"><span> 		}
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//注意第一个参数一定要使用applicationContext，而不是context，否则容易出现内存泄漏的情况
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 			<span style="color:#66d9ef">return</span> Room.databaseBuilder(context.applicationContext,
+</span></span><span style="display:flex;"><span> 			AppDatabase<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>.java, <span style="color:#e6db74">&#34;app_database&#34;</span>)
+</span></span><span style="display:flex;"><span> 			.build().apply {
+</span></span><span style="display:flex;"><span> 			instance = <span style="color:#66d9ef">this</span>
+</span></span><span style="display:flex;"><span> }}}}
+</span></span></code></pre></div><p>最后我们需要使用单例模式得到<code>AppDatabase</code>，如果实例不存在使用<code>Room.databaseBuilder()</code>方法来构建一个<code>AppDatabase</code>的实例。</p>
+<h4 id="4在activity中使用">（4）在activity中使用</h4>
+<p>通过AppDatabase得到userDao实例，之后在UI中调用，数据库操作属于耗时操作，Room默认是不允许在主线程中进行数据库操作的，将增删改查的功能通过thread都放到了子线程中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> userDao = AppDatabase.getDatabase(<span style="color:#66d9ef">this</span>).userDao()
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> user1 = User(<span style="color:#e6db74">&#34;Tom&#34;</span>, <span style="color:#e6db74">&#34;Brady&#34;</span>, <span style="color:#ae81ff">40</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">val</span> user2 = User(<span style="color:#e6db74">&#34;Tom&#34;</span>, <span style="color:#e6db74">&#34;Hanks&#34;</span>, <span style="color:#ae81ff">63</span>)
+</span></span><span style="display:flex;"><span> addDataBtn.setOnClickListener {
+</span></span><span style="display:flex;"><span> thread {
+</span></span><span style="display:flex;"><span>	 user1.id = userDao.insertUser(user1)
+</span></span><span style="display:flex;"><span> 	 user2.id = userDao.insertUser(user2)
+</span></span><span style="display:flex;"><span> }}
+</span></span></code></pre></div><p>在测试环境下允许在主线程中操作，可以</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>Room.databaseBuilder(context.applicationContext, AppDatabase<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>.java,<span style="color:#e6db74">&#34;app_database&#34;</span>)
+</span></span><span style="display:flex;"><span> .allowMainThreadQueries()
+</span></span><span style="display:flex;"><span> .build()
+</span></span></code></pre></div><h4 id="3room的数据库升级">3.Room的数据库升级</h4>
+<p>如果数据库需要增加实体类，以Book为例，我们定义好带有<code>@Entity</code>的Book的实体类和带有<code>@Dao</code>的BookDao接口后，修改AppDatabase中的代码，在Database中增加Book的实体类声明，实现了一个Migration的匿名类，并标明版本号，表示当数据库版本从1升级到2的时候就执行这个匿名类中的升级逻辑</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#a6e22e">@Database</span>(version = <span style="color:#ae81ff">2</span>, entities = [User<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>, Book<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>])
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AppDatabase</span> : RoomDatabase() {
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">userDao</span>(): UserDao
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">bookDao</span>(): BookDao
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">companion</span> <span style="color:#66d9ef">object</span> {
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">val</span> MIGRATION_1_2 = <span style="color:#66d9ef">object</span> <span style="color:#960050;background-color:#1e0010">: </span><span style="color:#a6e22e">Migration</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">migrate</span>(database: SupportSQLiteDatabase) {
+</span></span><span style="display:flex;"><span> 		database.execSQL(<span style="color:#e6db74">&#34;create table Book (id integer primary</span>
+</span></span><span style="display:flex;"><span> 		key autoincrement not <span style="color:#66d9ef">null</span>, name text not <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span> 		pages integer not <span style="color:#66d9ef">null</span>)<span style="color:#e6db74">&#34;)</span>
+</span></span><span style="display:flex;"><span> 	}
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> instance: AppDatabase? = <span style="color:#66d9ef">null</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">getDatabase</span>(context: Context): AppDatabase {
+</span></span><span style="display:flex;"><span> 		instance<span style="color:#f92672">?.</span>let {
+</span></span><span style="display:flex;"><span> 		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">it</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">return</span> Room.databaseBuilder(context.applicationContext,
+</span></span><span style="display:flex;"><span> 		AppDatabase<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>.java, <span style="color:#e6db74">&#34;app_database&#34;</span>)
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e">//注意这里加入addMigrations放入匿名类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 		.addMigrations(MIGRATION_1_2)
+</span></span><span style="display:flex;"><span> 		.build().apply {
+</span></span><span style="display:flex;"><span> 			instance = <span style="color:#66d9ef">this</span>
+</span></span><span style="display:flex;"><span> }}}}
+</span></span></code></pre></div><h2 id="workmanager">WorkManager</h2>
+<p>WorkManager是一个处理定时任务的工具，它可以保证在应用退出甚至手机重启的情况下，之前注册的任务仍然会得到执行。</p>
+<p>使用<code>WorkManager</code>需要添加依赖</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>implementation &#34;androidx.work:work-runtime:2.2.0&#34;
+</span></span></code></pre></div><h3 id="1workmanager的简单使用">1.<code>WorkManager</code>的简单使用</h3>
+<h4 id="1定义一个后台任务该类继承worker类">（1）定义一个后台任务，该类继承Worker类</h4>
+<p>定义一个后台任务<code>SimpleWorker</code>，该类继承Worker类并重写<code>doWork()</code>方法。注意doWork()方法不会运行在主线程当中，可以在这里执行耗时逻辑。<code>doWork()</code>方法要求返回一个Result对象，用于表示任务的运行结果，成功返回<code>Result.success()</code>，失败返回<code>Result.failure()</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SimpleWorker</span>(context: Context, params: WorkerParameters) : Worker(context, params) {
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">doWork</span>(): Result {
+</span></span><span style="display:flex;"><span> 	Log.d(<span style="color:#e6db74">&#34;SimpleWorker&#34;</span>, <span style="color:#e6db74">&#34;do work in SimpleWorker&#34;</span>)
+</span></span><span style="display:flex;"><span> 	<span style="color:#66d9ef">return</span> Result.success()
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="2配置该后台任务的运行条件和约束信息">（2）配置该后台任务的运行条件和约束信息</h4>
+<p>这一步比较复杂，简单起见，我们只构造构建单次运行的后台任务请求，使用<code>OneTimeWorkRequest.Builder</code>，<code>OneTimeWorkRequest.Builder</code>是<code>WorkRequest.Builder</code>的子类</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> request = OneTimeWorkRequest.Builder(SimpleWorker<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>.java).build()
+</span></span></code></pre></div><p>在这个过程中我们还可以加入其他的功能，设定延迟，并添加标签，该标签后面可以通过代码<code>WorkManager.getInstance(this).cancelAllWorkByTag(&quot;simple&quot;)</code>取消任务。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> request = OneTimeWorkRequest.Builder(SimpleWorker<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>.java)
+</span></span><span style="display:flex;"><span> .setInitialDelay(<span style="color:#ae81ff">5</span>, TimeUnit.MINUTES)
+</span></span><span style="display:flex;"><span> .addTag(<span style="color:#e6db74">&#34;simple&#34;</span>)
+</span></span><span style="display:flex;"><span> .build()
+</span></span></code></pre></div><p>如果想构建周期性运行的后台任务请求可以使用<code>PeriodicWorkRequest.Builder</code>，注意为了降低设备消耗，传入的运行周期间隔不能短于15分钟。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> request = PeriodicWorkRequest.Builder(SimpleWorker<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>.java, <span style="color:#ae81ff">15</span>,
+</span></span><span style="display:flex;"><span> TimeUnit.MINUTES).build()
+</span></span></code></pre></div><h4 id="3后台任务请求传入workmanager的enqueue方法">（3）后台任务请求传入WorkManager的enqueue()方法</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>WorkManager.getInstance(context).enqueue(request)
+</span></span></code></pre></div>
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/android%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/">Android网络技术</a></li>
+        
+        <li><a href="/posts/android%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/">Android面试题之四大组件</a></li>
+        
+        <li><a href="/posts/bitmap/">Bitmap</a></li>
+        
+        <li><a href="/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/">自定义控件</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/android%E5%9F%BA%E7%A1%80'>Android基础</a></li>
+                
+                <li><a href='/tags/jetpack'>Jetpack</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://leon-cappuccino.github.io/">Leon Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://leon-cappuccino.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/" title="Android本地数据存储">Android本地数据存储</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="Android网络技术">Android网络技术</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/jetpack/" title="Jetpack">Jetpack</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/" title="Android面试题之四大组件">Android面试题之四大组件</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/bitmap/" title="Bitmap">Bitmap</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/" title="自定义控件">自定义控件</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E5%9F%BA%E7%A1%80/">Android基础 (4)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Android基础知识 (2)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E7%BD%91%E7%BB%9C/">Android网络 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/jetpack/">Jetpack (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E6%95%B0%E6%8D%AE/">数据 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">自定义控件 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E9%9D%A2%E8%AF%95/">面试 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://leon-cappuccino.github.io/tags/android%E5%9F%BA%E7%A1%80/">Android基础</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/bitmap/">bitmap</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/jetpack/">Jetpack</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/retrofit/">retrofit</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/">四大组件</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">本地数据存储</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">自定义控件</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://leon-cappuccino.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

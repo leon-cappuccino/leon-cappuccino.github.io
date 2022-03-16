@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>自定义控件 | Leon Blog</title>
+    <meta property="og:title" content="自定义控件 - Leon Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-03-05T00:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-03-05T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="自定义控件是Android中必须会的，本文讲述了自定义控件的三个重要的函数和手势滑动">
+        
+    <meta name="author" content="">
+    <meta property="og:url" content="https://leon-cappuccino.github.io/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://leon-cappuccino.github.io/">
+                        Leon Blog
+                    </a>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://leon-cappuccino.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">自定义控件</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年3月5日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6'>自定义控件</a></span>
+            
+            <span class="meta-category"><a href='/categories/android%E5%9F%BA%E7%A1%80'>Android基础</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <h2 id="一自定义控件三大函数">一、自定义控件三大函数</h2>
+<p>自定义控件有三个很重要的函数，<code>onMeasure</code>、<code>onLayout</code>和<code>onDraw</code>，其中<code>onMeasure</code>用来测量自定义控件的高和宽，<code>onLayout</code>给出自定义控件的位置，<code>onDraw</code>最后根据控件大小和位置绘制自定义控件。其中<code>onDraw</code>是必须实现的函数，另外两个函数不是必须实现。</p>
+<h3 id="1onmeasure">1.<code>onMeasure</code></h3>
+<p>在绘制控件前必须要经历measure的过程，这个过程从最外层的<code>PhoneWindow</code>开始进行，<code>phonewindow</code>调用内部<code>frameLayout</code>的measure，<code>frameLayout</code>又调用内部view的<code>onMeasure</code>，依次类推，尤其是对于measure的过程，由于布局的控件可以抽象为一棵树，measure的过程将会是一种中序遍历。</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onMeasure</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> widthMeasureSpec<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> heightMeasureSpec<span style="color:#f92672">)</span>  
+</span></span></code></pre></div><p><code>widthMeasureSpec</code>和<code>heightMeasureSpec</code>这两个值通常情况下都是由父视图经过计算后传递给子视图的。</p>
+<h4 id="1什么时候需要实现onmeasure">（1）什么时候需要实现<code>onMeasure</code></h4>
+<p>如果自定义控件的尺寸与父布局大小相同，不需要重写<code>onMeasure</code>，如果需要特定大小的自定义控件，就需要实现<code>onMeasure</code>。</p>
+<h4 id="2measurespec">（2）<code>MeasureSpec</code></h4>
+<p><code>MeasureSpec</code>是一个类，封装了父布局传递给子布局的布局要求，<code>MeasureSpec</code>由size和mode组成。<code>MeasureSpec</code>转化成二进制是一个32位的值，其中前两位为mode，后30位为size。</p>
+<h5 id="1specmode">1）<code>specMode</code></h5>
+<p><code>specMode</code>一种有三种类型，<code>EXACTLY</code>、<code>AT_MOST</code> 和<code>UNSPECIFIED</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>MeasureSpec<span style="color:#f92672">.</span><span style="color:#a6e22e">AT_MOST</span>       <span style="color:#f92672">=</span> 2
+</span></span><span style="display:flex;"><span>MeasureSpec<span style="color:#f92672">.</span><span style="color:#a6e22e">EXACTLY</span>       <span style="color:#f92672">=</span> 1
+</span></span><span style="display:flex;"><span>MeasureSpec<span style="color:#f92672">.</span><span style="color:#a6e22e">UNSPECIFIED</span>   <span style="color:#f92672">=</span> 0
+</span></span></code></pre></div><p><code>EXACTLY</code>表示父元素决定自定义控件的确切大小，对应的是<code>match_parent</code>，当mode为<code>EXACTLY</code>，不需要设定尺寸，因为尺寸已经确定。</p>
+<p><code>AT_MOST</code>表示子元素至多达到指定大小的值，对应<code>wrap_content</code>,mode为<code>AT_MOST</code>就需要我们来设定尺寸。</p>
+<p><code>UNSPECIFIED</code>表示开发人员可以将视图按照自己的意愿设置成任意的大小，没有任何限制，一般不使用。</p>
+<h5 id="2通过measurespec获得相关值">2）通过<code>MeasureSpec</code>获得相关值</h5>
+<p>通常我们需要通过<code>MeasureSpec</code>获得mode和size，通过mode的值来设定自定义控件的尺寸，因此获得这些值通过以下方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> measureWidth <span style="color:#f92672">=</span> MeasureSpec<span style="color:#f92672">.</span><span style="color:#a6e22e">getSize</span><span style="color:#f92672">(</span>widthMeasureSpec<span style="color:#f92672">);</span>  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> measureHeight <span style="color:#f92672">=</span> MeasureSpec<span style="color:#f92672">.</span><span style="color:#a6e22e">getSize</span><span style="color:#f92672">(</span>heightMeasureSpec<span style="color:#f92672">);</span>  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> measureWidthMode <span style="color:#f92672">=</span> MeasureSpec<span style="color:#f92672">.</span><span style="color:#a6e22e">getMode</span><span style="color:#f92672">(</span>widthMeasureSpec<span style="color:#f92672">);</span>  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> measureHeightMode <span style="color:#f92672">=</span> MeasureSpec<span style="color:#f92672">.</span><span style="color:#a6e22e">getMode</span><span style="color:#f92672">(</span>heightMeasureSpec<span style="color:#f92672">);</span> 
+</span></span></code></pre></div><h4 id="3使用方式">（3）使用方式</h4>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>setMeasuredDimension<span style="color:#f92672">((</span>measureWidthMode <span style="color:#f92672">==</span> MeasureSpec<span style="color:#f92672">.</span><span style="color:#a6e22e">EXACTLY</span><span style="color:#f92672">)</span> <span style="color:#f92672">?</span> measureWidth<span style="color:#f92672">:</span> width<span style="color:#f92672">,</span> <span style="color:#f92672">(</span>measureHeightMode <span style="color:#f92672">==</span> MeasureSpec<span style="color:#f92672">.</span><span style="color:#a6e22e">EXACTLY</span><span style="color:#f92672">)</span> <span style="color:#f92672">?</span> measureHeight<span style="color:#f92672">:</span> height<span style="color:#f92672">);</span>
+</span></span></code></pre></div><h3 id="2onlayout">2.<code>onLayout</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onLayout</span><span style="color:#f92672">(</span><span style="color:#66d9ef">boolean</span> changed<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> l<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> t<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> r<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> b<span style="color:#f92672">);</span>
+</span></span></code></pre></div><p><code>onLayout</code>将<code>ViewGroup</code>里的每一个子View放置在一定的位置，注意<code>onLayout</code>在<code>ViewGroup</code>中定义是抽象函数，继承<code>ViewGroup</code>来实现一个自定义布局就必须重写<code>onLayout</code>方法，<code>ViewGroup</code>的<code>onMeasure</code>并非必须重写的。</p>
+<h4 id="1实现思路">（1）实现思路</h4>
+<p>在<code>onLayout()</code>方法里获取子View的实例，然后通过调用<code>View.layout(int l, int t, int r, int b)</code>实现子View在<code>ViewGroup</code>里的精确放置。注意在重写<code>onLayout()</code>时常常会使用函数<code>getChildCount()</code>，该函数用于获取该布局下子view的数量，而获得的数量是该布局下直接孩子的数量。</p>
+<h3 id="3ondraw">3.<code>onDraw</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onDraw</span><span style="color:#f92672">(</span>Canvas canvas<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p><code>onDraw</code>函数核心在于Canvas的使用。</p>
+<h2 id="手势检测">手势检测</h2>
+<h3 id="1ontouchevent和ontouch">1.<code>onTouchEvent()</code>和<code>onTouch()</code></h3>
+<p>手势检测中最简单的就是<code>onTouchEvent()</code>和<code>onTouch()</code>。</p>
+<h4 id="1ontouchevent">（1）<code>onTouchEvent()</code></h4>
+<p>``onTouchEvent()<code>是View中定义的方法，因此</code>Activity<code>、</code>ViewGroup<code>、</code>View`均可以调用这个方法，通过返回值决定是否调用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">onTouchEvent</span><span style="color:#f92672">(</span>MotionEvent event<span style="color:#f92672">)</span> 
+</span></span></code></pre></div><h4 id="2ontouch">（2）<code>onTouch()</code></h4>
+<p><code>onTouch()</code>是<code>View.OnTouchListener</code>接口中实现的唯一方法，该方法的两个参数决定了该方法必须与某个空间进行绑定。以控件<code>tv</code>为例，通常如果我们实现了<code>View.OnTouchListener</code>接口，可以使用<code>tv.setOnTouchListener(this)</code>，之后在实现<code>onTouch()</code>方法；如果未实现该接口，可以在<code>setOnTouchListener</code>实现<code>onTouch()</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">onTouch</span><span style="color:#f92672">(</span>View v<span style="color:#f92672">,</span> MotionEvent event<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>（3）<code>onTouchEvent()</code>和<code>onTouch()</code>优先级关系</p>
+<p>1）如果<code>onTouch()</code>方法返回值是true（事件已经被消费）时，则<code>onTouchEvent()</code>方法将不会被执行。</p>
+<p>2）当<code>onTouch()</code>方法返回值是false（事件未被消费，向下传递）时，<code>onTouchEvent</code>方法才被执行。</p>
+<p>综上，<code>onTouch()</code>的优先级更高。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onTouch</span>(v: View?, event: MotionEvent?): Boolean {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> mGestureDetector.onTouchEvent(event)
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>上面代码中调用了<code>mGestureDetector</code>让其自行处理。</p>
+<h3 id="2gesturedector手势检测">2.<code>GestureDector</code>手势检测</h3>
+<p>Android提供了<code>GestureDector</code>手势检测类，通过该类可以识别多种手势检测。但是我们在new一个<code>GestureDector</code>类时要求传入一个参数，该参数可以是两个接口一个外部类中的任意一个，两个接口为<code>OnGestureListener</code>和<code>OnDoubleTapListener</code>，一个外部类为<code>SimpleGestureListener</code>，其中外部类是两个接口中所有函数的集成，同时该类中的函数需要哪个再实现，而接口中的函数必须全部被实现。</p>
+<p><code>SimpleGestureListener</code>中的函数与另外两个接口中的函数相似，不再重复介绍。</p>
+<h4 id="1gesturedetectorongesturelistener接口">（1）<code>GestureDetector.OnGestureListener</code>接口</h4>
+<p>该接口中含有的函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">inner</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GestureListener</span> :GestureDetector.OnGestureListener{
+</span></span><span style="display:flex;"><span>    	<span style="color:#75715e">//用户按下屏幕就会触发该函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onDown</span>(e: MotionEvent?): Boolean {
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//用户按下的时间超过瞬间，并且按下没有松开，该函数触发
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onShowPress</span>(e: MotionEvent?) {
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//轻击屏幕立刻弹起触发
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onSingleTapUp</span>(e: MotionEvent?): Boolean {
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//在屏幕上拖动触发
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onScroll</span>(
+</span></span><span style="display:flex;"><span>            e1: MotionEvent?,
+</span></span><span style="display:flex;"><span>            e2: MotionEvent?,
+</span></span><span style="display:flex;"><span>            distanceX: Float,
+</span></span><span style="display:flex;"><span>            distanceY: Float
+</span></span><span style="display:flex;"><span>        ): Boolean {
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//长按触摸屏触发该函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onLongPress</span>(e: MotionEvent?) {
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//用户在屏幕上滑动后松开触发
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onFling</span>(
+</span></span><span style="display:flex;"><span>            e1: MotionEvent?,
+</span></span><span style="display:flex;"><span>            e2: MotionEvent?,
+</span></span><span style="display:flex;"><span>            velocityX: Float,
+</span></span><span style="display:flex;"><span>            velocityY: Float
+</span></span><span style="display:flex;"><span>        ): Boolean {
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>在使用过程中我们应该注意函数的触发顺序：</p>
+<p>1）长按触摸屏：<code>onDown</code>-&gt;<code>onShowPress</code>-&gt;<code>onLongPress</code></p>
+<p>2）快速单击不滑动：<code>onDown</code>-&gt;<code>onSingleTapUp</code>-&gt;<code>onSingleTapConfirmed</code></p>
+<p>3）慢速单击不滑动：<code>onDown</code>-&gt;<code>onShowPress</code>-&gt;<code>onSingleTapUp</code>-&gt;<code>onSingleTapConfirmed</code></p>
+<p>4）滑动屏幕或者拖动：<code>onDown</code>-&gt;<code>onScroll</code>-&gt;<code>onSroll</code>-&gt;&hellip;-&gt;<code>onFling</code></p>
+<h4 id="2gesturedetectorondoubletaplistener接口">（2）<code>GestureDetector.OnDoubleTapListener</code>接口</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">inner</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DoubleGestureListener</span> :GestureDetector.OnDoubleTapListener{
+</span></span><span style="display:flex;"><span>    	<span style="color:#75715e">//判定该点击是单击一次还是单击两次
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onSingleTapConfirmed</span>(e: MotionEvent?): Boolean {
+</span></span><span style="display:flex;"><span>            TODO(<span style="color:#e6db74">&#34;Not yet implemented&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//双击事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onDoubleTap</span>(e: MotionEvent?): Boolean {
+</span></span><span style="display:flex;"><span>            TODO(<span style="color:#e6db74">&#34;Not yet implemented&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//双击间隔发生的动作
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">onDoubleTapEvent</span>(e: MotionEvent?): Boolean {
+</span></span><span style="display:flex;"><span>            TODO(<span style="color:#e6db74">&#34;Not yet implemented&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>注意，在使用该双击监听时，还需要使用<code>setOnDoubleTapListener</code>设置双向监听。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>mGestureDetector= GestureDetector(<span style="color:#66d9ef">this</span>,GestureListener())
+</span></span><span style="display:flex;"><span>mGestureDetector.setOnDoubleTapListener(DoubleGestureListener())
+</span></span></code></pre></div>
+        </div>
+
+        
+
+
+        
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/android%E5%9F%BA%E7%A1%80'>Android基础</a></li>
+                
+                <li><a href='/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6'>自定义控件</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://leon-cappuccino.github.io/">Leon Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://leon-cappuccino.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/" title="Android本地数据存储">Android本地数据存储</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="Android网络技术">Android网络技术</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/jetpack/" title="Jetpack">Jetpack</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/android%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/" title="Android面试题之四大组件">Android面试题之四大组件</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/bitmap/" title="Bitmap">Bitmap</a>
+    </li>
+    
+    <li>
+        <a href="https://leon-cappuccino.github.io/posts/%E8%87%AA%E5%AE%9A%E4%B9%89view/" title="自定义控件">自定义控件</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E5%9F%BA%E7%A1%80/">Android基础 (4)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Android基础知识 (2)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/android%E7%BD%91%E7%BB%9C/">Android网络 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/jetpack/">Jetpack (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E6%95%B0%E6%8D%AE/">数据 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">自定义控件 (1)</a></li>
+    
+    <li><a href="https://leon-cappuccino.github.io/categories/%E9%9D%A2%E8%AF%95/">面试 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://leon-cappuccino.github.io/tags/android%E5%9F%BA%E7%A1%80/">Android基础</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/bitmap/">bitmap</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/jetpack/">Jetpack</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/retrofit/">retrofit</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/">四大组件</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">本地数据存储</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/">自定义控件</a>
+    
+    <a href="https://leon-cappuccino.github.io/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://leon-cappuccino.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
